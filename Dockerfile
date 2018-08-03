@@ -42,20 +42,8 @@ RUN echo "Installing ModSec Library" && \
     git submodule init && \
     git submodule update && \
     ./build.sh && \
-    ./configure \ 
-      --with-http_geoip_module=dynamic \
-      --with-http_v2_module \
-      --with-threads \
-      --with-stream \
-      --with-stream_ssl_module \
-      --with-stream_ssl_preread_module \
-      --with-stream_realip_module \
-      --with-stream_geoip_module=dynamic \
-      --with-http_slice_module \
-      --with-mail \
-      --with-mail_ssl_module \
-      --with-http_ssl_module && \ 
-    make && make install
+    ./configure && \
+     make && make install
 
 WORKDIR /tmp
 
@@ -76,6 +64,7 @@ RUN echo "Begin installing ModSec OWASP Rules" && \
     mv owasp-modsecurity-crs/ /usr/local/
 
 COPY nginx/nginx.conf /etc/nginx/
+COPY nginx/modsec_include.conf /etc/nginx/conf.d/
 COPY nginx/modsec/ /etc/nginx/modsec/
 COPY owasp/ /usr/local/owasp-modsecurity-crs/
 
@@ -87,6 +76,7 @@ RUN apk del .build-deps && \
     rm -rf /tmp/ModSecurity-nginx && \
     rm -rf /tmp/nginx-$NGINX_VERSION.tar.gz && \
     rm -rf /tmp/nginx-$NGINX_VERSION && \
+    mkdir -p /var/log/modsecurity && \
     echo "ModSecurty Installed" 
 
 WORKDIR /app/
