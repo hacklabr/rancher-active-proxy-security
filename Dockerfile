@@ -3,6 +3,9 @@ MAINTAINER Hacklab  sysadmin@hacklab.com.br
 
 ENV DEBUG=false RAP_DEBUG="info" 
 
+ENV MODSEC_MOD="" 
+
+
 # Install Modsecurity
 RUN apk add --no-cache --virtual .build-deps \
         gcc \
@@ -62,6 +65,9 @@ RUN ./configure --with-compat --add-dynamic-module=../ModSecurity-nginx && \
 RUN echo "Begin installing ModSec OWASP Rules" && \
     git clone -b v3.0/master https://github.com/SpiderLabs/owasp-modsecurity-crs && \
     mv owasp-modsecurity-crs/ /usr/local/
+
+COPY app/modsecurity-entrypoint.sh  /app/
+COPY app/entrypoint.sh  /app/
 
 COPY nginx/nginx.conf /etc/nginx/
 COPY nginx/modsec_include.conf /etc/nginx/conf.d/
