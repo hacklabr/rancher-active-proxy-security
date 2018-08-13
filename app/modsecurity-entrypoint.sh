@@ -8,12 +8,12 @@ if [[ -z $MODSEC_MOD  ]]
 
     elif [[ $MODSEC_MOD == "On" ]] 
     then
-    exec sed 's/SecRuleEngine DetectionOnly/SecRuleEngine On/g' /etc/nginx/modsec/modsecurity.conf 
+    exec sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/g' /etc/nginx/modsec/modsecurity.conf 
 	echo "ModSecurity Active Response Acivated"
 
     elif [[ $MODSEC_MOD == "Off" ]] 
     then
-    exec sed 's/SecRuleEngine DetectionOnly/SecRuleEngine Off/g' /etc/nginx/modsec/modsecurity.conf 
+    exec sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine Off/g' /etc/nginx/modsec/modsecurity.conf 
 	echo "ModSecurity Deactivated"
 
     else 

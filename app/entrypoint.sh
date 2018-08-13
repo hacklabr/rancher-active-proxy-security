@@ -59,11 +59,11 @@ function check_dh_group {
     
     fi
     
+    # Set ModSecurity Operation Mod
+    exec /app/modsecurity-entrypoint.sh
+
     #Deleting default.conf if it is there
     rm -f /etc/nginx/conf.d/default.conf
-
-    # Set ModSecurity Operation Mod
-    exec modsecurity-entrypoint.sh
 
     #Setting up crontab value 
     rm /etc/crontabs/root
